@@ -82,16 +82,18 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public E remove(int i) {
+		Node<E> curr=head;
+		Node<E> remove=null;
 		if(i==0) 
 			removeFirst();
 		else {
-			Node<E> curr=head;
 			for (int j = 0; j < i-1; j++) {
 				curr=curr.next;
 			}
+			remove=curr.getNext();
 			curr.setNext(curr.getNext().getNext());
 		}
-		return null;
+		return remove.getElement();
 	}
 
 	@Override
