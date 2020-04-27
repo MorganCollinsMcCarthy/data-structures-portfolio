@@ -1,3 +1,4 @@
+
 package projectCode20280;
 
 /*
@@ -134,7 +135,7 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
 			return null;
 		}
 		Entry<K, V> min = heap.get(0);
-		return null;
+		return min;
 	}
 
 	/**
@@ -187,13 +188,13 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
 	}
 
 	public static void main(String[] args) {
-		HeapPriorityQueue<Integer, Integer> pq = new HeapPriorityQueue<>();
-		Integer[] arr = new Integer[] { 20, 70, 6, 7, 8, 12, 10, 11, 25, 21, 17, 19, 18 };
-		for (Integer i : arr) {
-			pq.insert(i, 0);
-		}
-		System.out.println(pq);
-		System.out.println(pq.removeMin());
-		System.out.println(pq);
+//		HeapPriorityQueue<Integer, Integer> pq = new HeapPriorityQueue<>();
+//		Integer[] arr = new Integer[] {35,26,15,24,33,4,12,1,23,21,2,5};
+//		for (Integer i : arr) {
+//			pq.insert(i, i);
+//		}
+//		System.out.println(pq);
+//		System.out.println(pq.removeMin());
+//		System.out.println(pq);
 	}
 }
