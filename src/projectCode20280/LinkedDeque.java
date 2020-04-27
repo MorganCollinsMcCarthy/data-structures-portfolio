@@ -10,6 +10,11 @@ public class LinkedDeque<E> implements Deque<E> {
 	}
 
 	@Override
+	public String toString() {
+		return list.toString();
+	}
+
+	@Override
 	public int size() {
 		return list.size();
 	}

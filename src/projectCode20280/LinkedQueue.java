@@ -1,8 +1,7 @@
 package projectCode20280;
 
-
 public class LinkedQueue<E> implements Queue<E> {
-	
+
 	private SinglyLinkedList<E> list = new SinglyLinkedList<>();
 
 	public static void main(String[] args) {
@@ -33,6 +32,11 @@ public class LinkedQueue<E> implements Queue<E> {
 	@Override
 	public E dequeue() {
 		return list.removeFirst();
+	}
+
+	@Override
+	public String toString() {
+		return list.toString();
 	}
 
 }
