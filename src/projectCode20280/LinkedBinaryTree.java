@@ -4,7 +4,7 @@ package projectCode20280;
  * Concrete implementation of a binary tree using a node-based, linked
  * structure.
  */
-public class LinkedBinaryTree<E extends Comparable<E>> extends AbstractBinaryTree<E> {
+public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
 	/** Nested static class for a binary tree node. */
 	protected static class Node<E> implements Position<E> {
