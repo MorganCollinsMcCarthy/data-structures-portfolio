@@ -1,6 +1,5 @@
 package projectCode20280;
 
-
 public class BalanceableBinaryTree<K, V> extends LinkedBinaryTree<Entry<K, V>> {
 	// -------------- nested BSTNode class --------------
 	// this extends the inherited LinkedBinaryTree.Node class
@@ -38,7 +37,11 @@ public class BalanceableBinaryTree<K, V> extends LinkedBinaryTree<Entry<K, V>> {
 
 	/** Relinks a parent node with its oriented child node. */
 	private void relink(Node<Entry<K, V>> parent, Node<Entry<K, V>> child, boolean makeLeftChild) {
-		// TODO
+		child.setParent(parent);
+		if (makeLeftChild)
+			parent.setLeft(child);
+		else
+			parent.setRight(child);
 	}
 
 	/**
@@ -56,7 +59,21 @@ public class BalanceableBinaryTree<K, V> extends LinkedBinaryTree<Entry<K, V>> {
 	 * Caller should ensure that p is not the root.
 	 */
 	public void rotate(Position<Entry<K, V>> p) {
-		// TODO
+		Node<Entry<K, V>> x = validate(p);
+		Node<Entry<K, V>> parent = x.getParent(); // we get the parent and grandparent if theparent exist
+		Node<Entry<K, V>> grandparent = parent.getParent();
+		if (grandparent == null) {
+			root = x; // set to root
+			x.setParent(null);
+		} else
+			relink(grandparent, x, parent == grandparent.getLeft());
+		if (x == parent.getLeft()) {
+			relink(parent, x.getRight(), true);
+			relink(x, parent, false);
+		} else {
+			relink(parent, x.getLeft(), false);
+			relink(x, parent, true);
+		}
 	}
 
 	/**
@@ -89,7 +106,15 @@ public class BalanceableBinaryTree<K, V> extends LinkedBinaryTree<Entry<K, V>> {
 	 * Caller should ensure that x has a grandparent.
 	 */
 	public Position<Entry<K, V>> restructure(Position<Entry<K, V>> x) {
-		// TODO 
-		return null;
+		Position<Entry<K, V>> parent = parent(x);
+		Position<Entry<K, V>> grandparent = parent(parent);
+		if ((x == right(parent)) == (parent == right(grandparent))) {
+			rotate(parent);
+			return parent;
+		} else {
+			rotate(x);
+			rotate(x);
+			return x;
+		}
 	}
-} 
+}

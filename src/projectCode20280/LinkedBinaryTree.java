@@ -334,6 +334,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 		bt.createLevelOrder(arr);
 		System.out.println("bt inorder: " + bt.size() + " " + bt.inorder());
 		System.out.println("bt preorder: " + bt.size() + " " + bt.preorder());
+		System.out.println(bt.toString());
 
 //	  for(int i : arr) {
 //		  bt.insert(i);

@@ -188,8 +188,29 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 	 */
 	@Override
 	public V remove(K key) throws IllegalArgumentException {
-		// TODO
-		return null;
+		checkKey(key);
+		Position<Entry<K, V>> p = treeSearch(root(), key);
+		if (isExternal(p)) {
+			rebalanceAccess(p);
+			return null;
+		} else {
+			V remove = p.getElement().getValue();
+			if (isInternal(left(p)) && isInternal(right(p))) {
+				Position<Entry<K, V>> replacement = treeMax(left(p));
+				set(p, replacement.getElement());
+				p = replacement;
+			}
+			Position<Entry<K, V>> l;
+			if (isExternal(left(p)))
+				l = left(p);
+			else
+				l = right(p);
+			Position<Entry<K, V>> s = sibling(l);
+			remove(l);
+			remove(p);
+			rebalanceDelete(s);
+			return remove;
+		}
 	}
 
 	// additional behaviors of the SortedMap interface
@@ -337,7 +358,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 	@Override
 	public Iterable<Entry<K, V>> subMap(K fromKey, K toKey) throws IllegalArgumentException {
 		ArrayList<Entry<K, V>> sub = new ArrayList<>(size());
-		if (compare(fromKey, toKey) < 0) // ensure that fromKey < toKey
+		if (compare(fromKey, toKey) < 0) // make sure key is < 0
 			subMapRecurse(fromKey, toKey, root(), sub);
 		return sub;
 	}
@@ -373,26 +394,11 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 		}
 	}
 
-//	public String toString() {
-//		return tree.toString();
-//	}
+	public String toString() {
+		return tree.toString();
+	}
 
 	public static void main(String[] args) {
-		TreeMap<Integer, Integer> treeMap = new TreeMap<Integer, Integer>();
-
-		Random rnd = new Random();
-		int n = 16;
-		java.util.List<Integer> rands = rnd.ints(1, 1000).limit(n).distinct().boxed().collect(Collectors.toList());
-
-		for (Integer i : rands) {
-			treeMap.put(i, i);
-		}
-
-		System.out.println("tree entries: " + treeMap.entrySet());
-
-		treeMap.remove(rands.get(1));
-
-		System.out.println("tree entries after removal: " + treeMap.entrySet());
 	}
 
 	/** Overrides the TreeMap rebalancing hook that is called after an insertion. */
@@ -416,7 +422,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
 	}
 
 	protected void rotate(Position<Entry<K, V>> p) {
-		// TODO
+		tree.rotate(p);
 	}
 
 }
